@@ -7,9 +7,9 @@ import java.sql.SQLException;
 public class Ulti {
 
     private String driverName = "com.mysql.jdbc.Driver";
-    private String url = "jdbc:mysql://localhost:3306/pos";   //pos是database名字
-    private String user = "root";
-    private String password = "wh0415";
+    private String url = "jdbc:mysql://localhost:3306/pos?&useUnicode=true&characterEncoding=utf-8";   //pos是database名字
+    private String user = "pos";
+    private String password = "pos";
 
     private Connection conn = null;
     public Connection getConnection(){

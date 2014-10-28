@@ -1,20 +1,44 @@
-package com.thoughtworks.mysql.DAO;
+package com.thoughtworks.mysql.Dao;
 
 import com.thoughtworks.mysql.VO.Item;
 import com.thoughtworks.mysql.ulti.Ulti;
 
 import java.sql.*;
+import java.util.ArrayList;
 
-public class ItemDao {
+public class ItemDao implements ItemIDao {
     private Statement stmt = null;
     private ResultSet rs = null;
     private Ulti ulti= new Ulti();
 
-    public void insertItem(Item item){
-        String sql = "insert into items values('"+ item.getBarcode() +"', '"+ item.getName()+"', '" + item.getUnit() +"', '"+item.getPrice()+"')";
+    @Override
+    public Item getItemByBarcode(String barcode){
+        String sql = "SELECT * FROM items WHERE barcode = '"+ barcode +"'";
 
-        Connection conn = null;
-        conn = ulti.getConnection();
+        Item item = null;
+        Connection conn = ulti.getConnection();
+        try{
+            stmt = conn.createStatement();
+
+            rs = stmt.executeQuery(sql);
+            rs.next();
+            item = new Item(rs.getInt("id"), rs.getString("barcode"), rs.getString("name"), rs.getString("unit"), rs.getDouble("price"));
+
+            ulti.closeConnection();
+            stmt.close();
+            rs.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return item;
+    }
+
+    @Override
+    public void insertItem(Item item){
+        String sql = "insert into items values(null, '"+ item.getBarcode() +"', '"+ item.getName()+"', '" + item.getUnit() +"', '"+item.getPrice()+"')";
+
+        Connection conn = ulti.getConnection();
         try{
             stmt = conn.createStatement();
             //DML(数据操纵语言insert,)
@@ -33,11 +57,11 @@ public class ItemDao {
         }
     }
 
+    @Override
     public void deleteItem(String barcode){
         String sql = "DELETE FROM items where barcode = '" +barcode +"' ";
 
-        Connection conn = null;
-        conn = ulti.getConnection();
+        Connection conn = ulti.getConnection();
         try{
             stmt = conn.createStatement();
             //DML(数据操纵语言insert,)
@@ -55,12 +79,12 @@ public class ItemDao {
             e.printStackTrace();
         }
     }
+    @Override
     public void updateItem(String barcode){
 
         String sql = "UPDATE items SET name = 'cocacola', unit = 'can', price = 3.5 where barcode = '" + barcode +"' ";
 
-        Connection conn = null;
-        conn = ulti.getConnection();
+        Connection conn = ulti.getConnection();
         try{
             stmt = conn.createStatement();
             //DML(数据操纵语言insert,)
@@ -77,6 +101,31 @@ public class ItemDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
 
+    @Override
+    public ArrayList<Item> getItems(){
+        ArrayList<Item> items = new ArrayList<Item>();
+        String sql = "SELECT * FROM items";
+
+        Item item = null;
+        Connection conn = ulti.getConnection();
+        try{
+            stmt = conn.createStatement();
+
+            rs = stmt.executeQuery(sql);
+            while (rs.next()){
+                item = new Item(rs.getInt("id"), rs.getString("barcode"), rs.getString("name"), rs.getString("unit"), rs.getDouble("price"));
+                items.add(item);
+            }
+
+            ulti.closeConnection();
+            stmt.close();
+            rs.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return items;
     }
 }

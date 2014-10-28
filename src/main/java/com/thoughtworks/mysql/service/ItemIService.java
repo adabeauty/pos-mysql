@@ -1,6 +1,6 @@
 package com.thoughtworks.mysql.service;
 
-import com.thoughtworks.mysql.VO.Item;
+import com.thoughtworks.mysql.module.Item;
 import java.util.ArrayList;
 
 public interface ItemIService {

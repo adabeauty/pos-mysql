@@ -1,7 +1,7 @@
 package com.thoughtworks.mysql.service;
 
 import com.thoughtworks.mysql.Dao.ItemDao;
-import com.thoughtworks.mysql.VO.Item;
+import com.thoughtworks.mysql.module.Item;
 import java.util.ArrayList;
 
 public class ItemService implements ItemIService {

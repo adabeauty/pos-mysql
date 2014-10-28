@@ -1009,20 +1009,33 @@
       <column name="PROCESSLIST_ID" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="NAME" sqlType="VARCHAR" precision="128" scale="0" nullable="false" jdbcType="12"/>
     </table>
+    <table name="categories" schema="" catalog="pos" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="items_ibfk_1" table="items" schema="" catalog="pos" columns="categoryId"/>
+    </table>
     <table name="items" schema="" catalog="pos" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="categoryId" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="barcode" sqlType="VARCHAR" precision="14" scale="0" nullable="false" jdbcType="12"/>
       <column name="name" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
       <column name="unit" sqlType="VARCHAR" precision="4" scale="0" nullable="false" jdbcType="12"/>
       <column name="price" sqlType="DOUBLE" precision="22" scale="0" nullable="true" jdbcType="8"/>
-      <primary-key name="PRIMARY" columns="barcode"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="items_ibfk_1" columns="categoryId" ref-table="categories" ref-schema="" ref-catalog="pos" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
     </table>
-    <table name="pet" schema="" catalog="pos" type="TABLE">
-      <column name="name" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
-      <column name="owner" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
-      <column name="species" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
-      <column name="sex" sqlType="CHAR" precision="1" scale="0" nullable="true" jdbcType="1"/>
-      <column name="birth" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
-      <column name="death" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+    <table name="promotions" schema="" catalog="pos" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="description" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12"/>
+      <column name="type" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="relationship" schema="" catalog="pos" type="TABLE">
+      <column name="itemId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="promotionId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="discount" sqlType="DOUBLE" precision="22" scale="0" nullable="true" jdbcType="8"/>
+      <primary-key name="PRIMARY" columns="itemId,promotionId"/>
     </table>
   </data-source>
 </component>

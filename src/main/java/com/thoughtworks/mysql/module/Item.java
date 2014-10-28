@@ -1,4 +1,4 @@
-package com.thoughtworks.mysql.VO;
+package com.thoughtworks.mysql.module;
 
 public class Item {
 
@@ -8,8 +8,12 @@ public class Item {
     private String unit;
     private double price;
 
-    public int getId() {
-        return id;
+    public Item(int id, String barcode, String name, String unit, double price) {
+        this.id = id;
+        this.barcode = barcode;
+        this.name = name;
+        this.unit = unit;
+        this.price = price;
     }
 
     public String getBarcode() {
@@ -26,13 +30,5 @@ public class Item {
 
     public double getPrice() {
         return price;
-    }
-
-    public Item(int id, String barcode, String name, String unit, double price) {
-        this.id = id;
-        this.barcode = barcode;
-        this.name = name;
-        this.unit = unit;
-        this.price = price;
     }
 }
